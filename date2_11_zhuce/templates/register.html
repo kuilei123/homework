@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<form action="{% url 'App01:register' %}" method="post">
+    {% csrf_token %}
+
+    用户名：<input type="text" name="username"> <span>{{ form.username.errors }}</span><br>
+    密码：<input type="password" name="password"> <span>{{ form.password.errors }}</span><br>
+    确认密码：<input type="password" name="confirm_password"> <span>{{ form.confirm_password.errors }}</span><br>
+    邮箱：<input type="text" name="email"> <span>{{form.email.errors}}</span><br>
+    手机号：<input type="text" name="phone"> <span>{{form.phone.errors}}</span><br>
+    {{ form.errors }}
+    <input type="submit">
+</form>
+
+</body>
+</html>
