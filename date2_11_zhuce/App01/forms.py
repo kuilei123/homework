@@ -1,21 +1,28 @@
 
 
 #注册表单
+import re
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
 from App01.models import User
-
+def check_password(Value):
+    if re.match(r'\d*$',Value):
+        raise ValidationError({'password':['密码不能是纯数字']})
 
 class RegisterForm(forms.Form):
     username=forms.CharField(label='用户名',min_length=6,required=True,
                              error_messages={'required':'用户名不能为空','min_length':'用户名长度必须大于6位'})
     password=forms.CharField(label='密码',min_length=6,max_length=12,
-                             required=True,validators=[RegexValidator(regex=r'\d*$', message="密码不能是纯数字",code='password')],
+                             required=True,
+                             # validators=[RegexValidator(regex=r'\d*$', message="密码不能是纯数字",code='password')],
+                             validators=[check_password],
                              error_messages={'min_length':'密码长度必须大于6，小于12','max_length':'密码长度必须大于6，小于12','required':'密码不能为空'})
     confirm_password = forms.CharField(label='确认密码', min_length=6, max_length=12,
                                required=True,
+                               validators=[check_password],
                                error_messages={'min_length': '密码长度必须大于6，小于12', 'max_length': '密码长度必须大于6，小于12',
                                                'required': '密码不能为空'})
     email = forms.EmailField(error_messages={'invalid':'邮箱格式不正确'})
@@ -48,7 +55,7 @@ class RegisterForm(forms.Form):
         email=self.cleaned_data.get('email')
         if User.objects.filter(email=email).first():
             raise ValidationError('邮箱已存在')
-
+        return email
 
     def clean(self):
         password = self.cleaned_data.get('password')

@@ -15,6 +15,7 @@ def register(request):
             email=form.cleaned_data.get('email')
             phone=form.cleaned_data.get('phone')
             user=User(username=username,password=password,email=email,phone=phone)
+            print(username,password,email,phone)
             user.save()
             return HttpResponse('首页')
         else:
