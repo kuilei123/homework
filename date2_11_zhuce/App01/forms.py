@@ -10,7 +10,7 @@ from django.core.validators import RegexValidator
 from App01.models import User
 def check_password(Value):
     if re.match(r'\d*$',Value):
-        raise ValidationError({'password':['密码不能是纯数字']})
+        raise ValidationError('密码不能是纯数字')
 
 class RegisterForm(forms.Form):
     username=forms.CharField(label='用户名',min_length=6,required=True,
