@@ -2,7 +2,8 @@
 
 from django.urls import path
 
-from App01 import views
+from App01 import views, ttt
+
 app_name='App01'
 urlpatterns = [
     path('register/',views.register,name='register'),
@@ -13,4 +14,6 @@ urlpatterns = [
 
     # 短信登录
     path('smslogin/',views.sms_login,name='smslogin'),
+    #邮件发送
+    # path('sendone/',views.send_one,name='one'),
 ]

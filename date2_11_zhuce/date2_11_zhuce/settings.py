@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'date2_11_zhuce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'day06',
+        'NAME':'xuexi',
         'USER':'root',
         'PASSWORD':'123',
         'PORT':3306,
@@ -126,6 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'App01.User'
 
  # django_simple_captcha 验证码配置
 # https://django-simple-captcha.readthedocs.io/en/latest/advanced.html
@@ -145,3 +146,16 @@ CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge' # 图片中的
 CAPTCHA_LENGTH = 4 # 字符个数
 CAPTCHA_TIMEOUT = 1 # 超时(minutes)
 
+
+
+# 邮件配置
+# smtp服务的邮箱服务器
+EMAIL_HOST = 'smtp.126.com'
+# smtp服务固定的端口是25
+EMAIL_PORT = 25  # 端口
+#发送邮件的邮箱
+EMAIL_HOST_USER = "puppet123@126.com"
+#在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'cui123'  # 授权码
+#收件人看到的发件人 <此处要和发送邮件的邮箱相同>
+EMAIL_FROM = 'python<puppet123@126.com>'

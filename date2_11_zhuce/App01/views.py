@@ -1,7 +1,11 @@
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
 
+from django.core.mail import send_mail
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from date2_11_zhuce.settings import EMAIL_HOST_USER
 # Create your views here.
+from django.urls import reverse
+
 from App01.forms import RegisterForm, LoginForm
 from App01.models import User
 
@@ -16,8 +20,14 @@ def register(request):
             phone=form.cleaned_data.get('phone')
             user=User(username=username,password=password,email=email,phone=phone)
             print(username,password,email,phone)
-            user.save()
-            return HttpResponse('首页')
+
+            send_status=send_mail("新用户注册", "欢迎{username}的加入".format(username=username), EMAIL_HOST_USER, ['{email}'.format(email=email),'1239918690@qq.com'])
+            print(send_status)
+            if send_status:
+                user.save()
+                return redirect(reverse('App01:verify'))
+            else:
+                return HttpResponse('邮件发送失败,请稍后重新注册')
         else:
             return render(request,'register.html',locals())
 
@@ -93,3 +103,8 @@ def sms_login(request):
                 return HttpResponse("用户不存在")
 
     return render(request,'sms.html')
+
+
+# def send_one(request):
+#     send_mail("武汉加油", "中国加油", EMAIL_HOST_USER, ['1239918690@qq.com'])
+#     return HttpResponse("发送成功")
