@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<form action="{% url 'App01:verify' %}" method="post">
+    {% csrf_token %}
+    用户名：<input type="text" name="username"> <span>{{ form.username.errors.0 }}</span> <br>
+    密码：<input type="password" name="password"> <br>
+    验证码：{{ form.captcha }} <span>{{ form.captcha.errors.0 }}</span> <br>
+    <input type="submit">
+</form>
+</body>
+</html>

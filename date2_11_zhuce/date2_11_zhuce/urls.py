@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('App01/',include('App01.urls'))
+    path('App01/',include('App01.urls')),
+    # 在跟路由添加验证码的路由
+    path('captcha/',include("captcha.urls")),
 ]

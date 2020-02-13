@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'App01.apps.App01Config',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+ # django_simple_captcha 验证码配置
+# https://django-simple-captcha.readthedocs.io/en/latest/advanced.html
+# 格式
+CAPTCHA_OUTPUT_FORMAT = '%(image)s %(text_field)s %(hidden_field)s'
+# 噪点样式
+CAPTCHA_NOISE_FUNCTIONS = (
+    'captcha.helpers.noise_null', # 没有样式
+    'captcha.helpers.noise_arcs', # 线
+    'captcha.helpers.noise_dots', # 点
+)
+# 图片大小
+CAPTCHA_IMAGE_SIZE = (100, 25)
+CAPTCHA_BACKGROUND_COLOR = '#ffffff'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge' # 图片中的文字为随机英文字母，如 mdsh
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'    # 图片中的文字为数字表达式，如1+2=</span>
+CAPTCHA_LENGTH = 4 # 字符个数
+CAPTCHA_TIMEOUT = 1 # 超时(minutes)
+

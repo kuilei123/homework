@@ -3,6 +3,7 @@
 #注册表单
 import re
 
+from captcha.fields import CaptchaField
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
@@ -67,7 +68,20 @@ class RegisterForm(forms.Form):
         return self.cleaned_data
 
 
+# 登录
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True,error_messages={
+        'required':'用户名必须输入'
+    })
+    password = forms.CharField()
+    captcha = CaptchaField()  # 验证码字段
 
-
+# class SMSlogin(forms.Form):
+#     username = forms.CharField(required=True, error_messages={
+#         'required': '用户名必须输入'
+#     })
+#     password = forms.CharField()
+#     phone = forms.CharField()
+#
 
 

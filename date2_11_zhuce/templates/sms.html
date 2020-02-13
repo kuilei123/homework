@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>短信登录</title>
+</head>
+<body>
+<form action="{% url 'App01:smslogin' %}" method="post">
+    {% csrf_token %}
+    用户名：<input type="text" name="username"> <br>
+    密码：<input type="password" name="password"> <br>
+    手机号：<input type="text" name="phone" id="phone"> <br>
+    验证码：<input type="text" name="yzm"> <input type="button" id="send" value="发送短信验证码"> <br>
+    <input type="submit">
+</form>
+</body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    $("#send").click(function () {
+        num = 5;
+        $(this).attr('disabled',true);
+        $(this).prop('value',""+num+"秒后发送");
+        let _this = this;  //this表示当前按钮
+        var timer = setInterval(function () {
+            num -= 1;
+            if (num <=0){
+                $(_this).attr('disabled',false);
+                $(this).prop('value',"发送验证码")
+                return
+            }
+            $(_this).prop('value',""+num+"秒后发送");
+            console.log(num)
+        },1000);
+        let phone = $("#phone").val();
+        let csrf = $("[name='csrfmiddlewaretoken']").val();
+        // 发送短信验证码
+        $.post("{% url 'App01:sms' %}",{'phone':phone,'csrfmiddlewaretoken':csrf},function (data) {
+            console.log(data)
+        })
+
+    })
+</script>
